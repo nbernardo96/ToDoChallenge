@@ -106,7 +106,7 @@ export const TodoDashboard = () => {
           sx={{ 
             width: '100%', 
             maxWidth: screenLg ? 360 : null, 
-            marginTop: screenLg ? 20 : 10 
+            marginTop: screenLg ? 20 : 10
           }}>
             {todoData.map((todo) => {
               const labelId = `checkbox-list-label-${todo.id}`;
@@ -115,12 +115,12 @@ export const TodoDashboard = () => {
                 <ListItem
                   key={todo.id}
                   secondaryAction={
-                    <Typography>
+                    <Typography sx={{ textDecoration: todo.isComplete ? 'line-through' : null }}>
                       {todo.dueDate}
                     </Typography>
                   }
                   disablePadding
-                  sx={{ 
+                  sx={{   
                     bgcolor: 'inherit' ,
                     ...(todo.isComplete && {
                       bgcolor: 'rgba(105, 240, 174, 0.65)'
@@ -140,7 +140,13 @@ export const TodoDashboard = () => {
                         inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </ListItemIcon>
-                    <ListItemText id={labelId} primary={todo.description} />
+                    <ListItemText 
+                    id={labelId} 
+                    primary={todo.description} 
+                    sx={{ 
+                      textDecoration: todo.isComplete ? 'line-through' : null 
+                    }}
+                    />
                   </ListItemButton>
                 </ListItem>
               );
