@@ -1,10 +1,20 @@
 # ToDo List Challenge
 
-This is a todo list web application that calls a Mock API, sorts the todo list items according to due dates and completion and marks items as completed when selected.
+This is a todo list web application that calls a Mock API, sorts the todo list items according to due dates and completion, and marks items as completed when selected.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and styled with [Material UI](https://mui.com/material-ui/getting-started/overview/).
+
+## Environment
+
+* Before running scripts, create a `.env` file at the root of your project directory
+* Add `REACT_APP_API_KEY=<API_KEY>` inside your .env file and save
+    * Note that `<API_KEY>` is the API key you are given in order to make requests to the Mock API
 
 ## Available Scripts
+
+Install dependencies with:
+
+### `yarn install`
 
 In the project directory, you can run:
 
