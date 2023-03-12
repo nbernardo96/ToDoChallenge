@@ -19,13 +19,12 @@ export const todoReducer = (state = initialState, action) => {
           // format dueDate
           for (let t in newTodoItems) {
             if (newTodoItems[t].dueDate) {
-              const dueDateStr = newTodoItems[t].dueDate
-              const dueDate = new Date(dueDateStr)
-              const formattedDateStr = moment(dueDate).format('MM/DD/YYYY')
-              const formattedDateStrToCheck = moment(dueDate).format('YYYY-MM-DD')
-              newTodoItems[t].dueDate = formattedDateStr
-
-              if (moment(formattedDateStrToCheck).isBefore('2021-01-01')) {
+              const dueDate = new Date(newTodoItems[t].dueDate)
+              const formattedDueDate = moment(dueDate).format('MM/DD/YYYY')
+              newTodoItems[t].dueDate = formattedDueDate
+              
+              const formattedDueDateToCheck = moment(dueDate).format('YYYY-MM-DD')
+              if (moment(formattedDueDateToCheck).isBefore('2021-01-01')) {
                 newTodoItems[t].overDue = true
               } else {
                 newTodoItems[t].overDue = false
@@ -37,8 +36,8 @@ export const todoReducer = (state = initialState, action) => {
             todos: newTodoItems,
           }
       case UPDATE_TODO_DATA:
-        let updatedTodoItems = JSON.parse(JSON.stringify(state.todos));
         let updatedData = action.payload
+        let updatedTodoItems = JSON.parse(JSON.stringify(state.todos));
         const index = updatedTodoItems.findIndex((obj) => parseInt(obj.id) === updatedData.id);
         if (index !== -1) {
           updatedTodoItems[index].isComplete = updatedData.data.isComplete;
@@ -58,6 +57,6 @@ export const todoReducer = (state = initialState, action) => {
           update_todos_loading: action.payload
         }
       default: 
-          return state
+        return state
   }
 }

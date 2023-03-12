@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationBar } from "./NavigationBar";
 import { AlertBar } from "./AlertBar";
-
 import { get_todo_data } from "../actions/todoListActions";
 import { update_todo_data } from "../actions/todoListActions";
 
@@ -23,6 +22,7 @@ import {
 export const TodoDashboard = () => {
   const dispatch = useDispatch();
   const screenLg = useMediaQuery('(min-width:768px)');
+
   const get_todos_loading = useSelector(state => state.todos.get_todos_loading)
   const todos = useSelector(state => state.todos.todos)
 
@@ -34,13 +34,13 @@ export const TodoDashboard = () => {
     const data = {
       isComplete: !todo.isComplete
     }
-    dispatch (
+    dispatch(
       update_todo_data(parseInt(todo.id), data)
     ).then(() => {
       if (!todo.isComplete === true) {
         setShowAlert(true)
         setAlertContent(`You've completed ${todo.description}!`)
-        setTimeout(function() {
+        setTimeout(() => {
           setShowAlert(false)
           setAlertContent('')
         }, 3000);
@@ -59,11 +59,11 @@ export const TodoDashboard = () => {
       
       // sort todos by dueDate
       if (t1.dueDate && t2.dueDate) {
-        const dateA = new Date(t1.dueDate);
-        const dateB = new Date(t2.dueDate);
-        if (dateA < dateB) {
+        const dateT1 = new Date(t1.dueDate);
+        const dateT2 = new Date(t2.dueDate);
+        if (dateT1 < dateT2) {
           return -1;
-        } else if (dateA > dateB) {
+        } else if (dateT1 > dateT2) {
           return 1;
         }
       } else if (t1.dueDate) {
@@ -77,7 +77,7 @@ export const TodoDashboard = () => {
   } 
 
   useEffect(() => {
-    dispatch (
+    dispatch(
       get_todo_data()
     ).then(res => {
       const sortedData = sortTodos(res)
@@ -94,32 +94,32 @@ export const TodoDashboard = () => {
   return (
     <Box>
       <NavigationBar />
-      <AlertBar showAlert={showAlert} alertContent={alertContent} 
-      />
+      <AlertBar showAlert={showAlert} alertContent={alertContent} />
       <Box 
       sx={{ 
         display: screenLg ? 'flex' : 'block', 
         justifyContent: screenLg ? 'center' : ''
-      }}>
+      }}
+      >
         { !get_todos_loading ?
           <List 
           sx={{ 
             width: '100%', 
             maxWidth: screenLg ? 360 : null, 
             marginTop: screenLg ? 20 : 10
-          }}>
+          }}
+          >
             {todoData.map((todo) => {
               const labelId = `checkbox-list-label-${todo.id}`;
-
               return (
                 <ListItem
                   key={todo.id}
+                  disablePadding
                   secondaryAction={
                     <Typography sx={{ textDecoration: todo.isComplete ? 'line-through' : null }}>
                       {todo.dueDate}
                     </Typography>
                   }
-                  disablePadding
                   sx={{   
                     bgcolor: 'inherit' ,
                     ...(todo.isComplete && {
@@ -130,7 +130,7 @@ export const TodoDashboard = () => {
                     })
                   }}
                 >
-                  <ListItemButton role={undefined} onClick={toggleTodoItem(todo)} dense>
+                  <ListItemButton onClick={toggleTodoItem(todo)} dense>
                     <ListItemIcon>
                       <Checkbox
                         edge="start"
