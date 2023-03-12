@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { TodoDashboard } from './components/TodoDashboard';
 
-import './styles/main.css';
 
 const darkTheme = createTheme({
   palette: {
@@ -20,9 +19,6 @@ export const App = () => {
       <CssBaseline />
       <TodoDashboard />
     </ThemeProvider>
-    // <div className='container'>
-    //   <TodoDashboard />
-    // </div>
   );
 }
 

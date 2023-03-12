@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavigationBar } from "./NavigationBar";
+import { AlertBar } from "./AlertBar";
+
 import { get_todo_data } from "../actions/todoListActions";
 import { update_todo_data } from "../actions/todoListActions";
 
@@ -10,16 +13,22 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import { CircularProgress, Typography } from "@mui/material";
+import { 
+  Typography,
+  CircularProgress, 
+  useMediaQuery
+} from "@mui/material";
 
-import { NavigationBar } from "./NavigationBar";
 
 export const TodoDashboard = () => {
   const dispatch = useDispatch();
+  const screenLg = useMediaQuery('(min-width:768px)');
   const get_todos_loading = useSelector(state => state.todos.get_todos_loading)
   const todos = useSelector(state => state.todos.todos)
 
   const [todoData, setTodoData] = useState([])
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertContent, setAlertContent] = useState('')
 
   const toggleTodoItem = (todo) => () => { 
     const data = {
@@ -27,7 +36,15 @@ export const TodoDashboard = () => {
     }
     dispatch (
       update_todo_data(parseInt(todo.id), data)
-    ).then(res => {
+    ).then(() => {
+      if (!todo.isComplete === true) {
+        setShowAlert(true)
+        setAlertContent(`You've completed ${todo.description}!`)
+        setTimeout(function() {
+          setShowAlert(false)
+          setAlertContent('')
+        }, 3000);
+      }
     })
   };
 
@@ -74,13 +91,23 @@ export const TodoDashboard = () => {
     setTodoData([...sortedData])
   }, [todos])
 
-
   return (
     <Box>
       <NavigationBar />
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <AlertBar showAlert={showAlert} alertContent={alertContent} 
+      />
+      <Box 
+      sx={{ 
+        display: screenLg ? 'flex' : 'block', 
+        justifyContent: screenLg ? 'center' : ''
+      }}>
         { !get_todos_loading ?
-          <List sx={{ width: '100%', maxWidth: 360, marginTop: 20 }}>
+          <List 
+          sx={{ 
+            width: '100%', 
+            maxWidth: screenLg ? 360 : null, 
+            marginTop: screenLg ? 20 : 10 
+          }}>
             {todoData.map((todo) => {
               const labelId = `checkbox-list-label-${todo.id}`;
 

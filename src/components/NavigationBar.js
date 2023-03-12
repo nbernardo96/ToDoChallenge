@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 export const NavigationBar = () => {
   return (
     <AppBar position="static" sx={{ background: '#2F353E' }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ margin: 0 }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
