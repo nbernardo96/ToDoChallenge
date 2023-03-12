@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# ToDo List Challenge
 
 This is a todo list web application that calls a Mock API, sorts the todo list items according to due dates and completion and marks items as completed when selected.
 
