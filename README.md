@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+This is a todo list web application that calls a Mock API, sorts the todo list items according to due dates and completion, marks items as completed when selected.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
